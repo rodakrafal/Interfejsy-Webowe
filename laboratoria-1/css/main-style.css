@@ -10,7 +10,6 @@ p{
     margin-right: 5vh;
     margin-bottom: 8vh;
     justify-content: center;
-    
 }
 
 body {
@@ -33,9 +32,9 @@ section {
 img {
     width: 100%;
     height: auto;
-    /* Magic! */
     max-width: 50vw;
     min-width: 30vw;
+    text-align: center;
 }
 
 img:hover{
@@ -62,8 +61,18 @@ a:visited {
     text-decoration: none;
 }
 
-a:hover{
-
+.box {
+    -webkit-transition:  -webkit-transform .2s;
+    -moz-transition: -moz-transform .2s;
+    -o-transition: -o-transform .2s;
+    -ms-transition: -ms-transform .2s; 
+    transition: transform .2s; 
+}
+.box:hover {
+   -webkit-transform:scale(2);
+   -moz-transform:scale(2);
+   -o-transform:scale(2);
+   transform:scale(2);
 }
 
 .spacer {
@@ -88,4 +97,19 @@ a:hover{
 
 .layer-fourth {
     background-image: url('./layers/layer4.svg');
+}
+
+.animation-moving {
+    position: relative;
+    animation-name: try-and-catch-me;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes try-and-catch-me {
+    0%   {left:-10vw; top:-8vh;}
+    25%  {left:5vw; top:-8vh;}
+    50%  {left:5vw; top:10vh;}
+    75%  {left:-10vw; top:10vh;}
+    100% {left:-10vw; top:-8vh;}
 }
