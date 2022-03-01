@@ -1,0 +1,48 @@
+h1{
+    font-size: 4rem;
+}
+
+p{
+    font-size: 1.5rem;
+}
+
+body {
+    margin: 0;
+    font-family: 'Prompt', sans-serif;
+    color: white;
+    background: #000a11;
+    overflow-x: hidden;
+}
+
+section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 400px;
+    padding-top: 100px;
+} 
+
+.spacer {
+    aspect-ratio: 960/300;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.layer-first {
+    background-image: url('./layers/layer1.svg');
+}
+
+.layer-second {
+    background-image: url('./layers/layer2.svg');
+}
+
+.layer-third {
+    background-image: url('./layers/layer3.svg');
+}
+
+.layer-fourth {
+    background-image: url('./layers/layer4.svg');
+}
