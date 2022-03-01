@@ -1,9 +1,16 @@
 h1{
     font-size: 4rem;
+    text-align: center;
 }
 
 p{
     font-size: 1.5rem;
+    margin-top: 2vh;
+    margin-left: 5vh;
+    margin-right: 5vh;
+    margin-bottom: 8vh;
+    justify-content: center;
+    
 }
 
 body {
@@ -19,9 +26,45 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 400px;
-    padding-top: 100px;
+    min-height: 300px;
+    padding-top: 0px;
 } 
+
+img {
+    width: 100%;
+    height: auto;
+    /* Magic! */
+    max-width: 50vw;
+    min-width: 30vw;
+}
+
+img:hover{
+    transition: 1.20s;
+    -webkit-transition: 1.20s;
+    -moz-transition: 1.20s;
+    -ms-transition: 1.20s;
+    -o-transition: 1.20s;
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+a:link {
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover{
+
+}
 
 .spacer {
     aspect-ratio: 960/300;
