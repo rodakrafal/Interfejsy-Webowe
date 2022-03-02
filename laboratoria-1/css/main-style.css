@@ -22,7 +22,6 @@ p{
     justify-content: center;
     text-align: justify;
     text-justify: inter-word;
-
 }
 
 body{
@@ -132,6 +131,14 @@ a:active{
     background-image: url('./layers/layer4.svg');
 }
 
+.layer-fifth {
+    background-image: url('./layers/layer5.svg');
+}
+
+.layer-sixth {
+    background-image: url('./layers/layer6.svg');
+}
+
 .animation-moving{
     position: relative;
     animation-name: try-and-catch-me;
@@ -149,7 +156,7 @@ a:active{
 
 .navbar{
     width: 5rem;
-    height: 100vh;
+    height: 100%;
     position: fixed;
     z-index: 1;
     background-color: var(--bg-primary);
@@ -243,4 +250,68 @@ a:active{
 
 .navbar:hover .logo svg{
     transform: rotate(-180deg);
+}
+
+
+.days, .time{
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    text-align: center;
+    vertical-align: baseline;
+    text-align-last: center;
+}
+
+th, td{
+    padding: 0.5vh; 
+    width: 5vh;
+    text-align: center;
+    text-align-last: center;
+}
+
+.tooltip{
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px #23232e;
+}
+  
+.tooltip .tooltiptext{
+    visibility: hidden;
+    width: 120px;
+    background-color: #23232e;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+  
+.tooltip .tooltiptext::after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #23232e transparent transparent transparent;
+}
+  
+.tooltip:hover .tooltiptext{
+    visibility: visible;
+}
+
+.projects{   
+    background: #c62368;
+}
+
+.laboratory{
+    background-color: #f37e91;
+}
+
+.exercises{
+    background-color: #ffc0cb;
 }
