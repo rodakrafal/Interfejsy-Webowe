@@ -20,7 +20,8 @@ p{
     margin-right: 5vh;
     margin-bottom: 8vh;
     justify-content: center;
-    text-justify: auto;
+    text-align: justify;
+    text-justify: inter-word;
 
 }
 
