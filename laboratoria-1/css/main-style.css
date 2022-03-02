@@ -1,3 +1,10 @@
+:root{
+    font-size: 16px;
+    font-family: 'Prompt', sans-serif;
+    --text-primary: var(#b6b6b6);  
+    --text-secondary:var(#ececec)
+}
+
 h1{
     font-size: 4rem;
     text-align: center;
@@ -12,15 +19,31 @@ p{
     justify-content: center;
 }
 
-body {
+body{
     margin: 0;
-    font-family: 'Prompt', sans-serif;
+    padding: 0;
     color: white;
     background: #000a11;
     overflow-x: hidden;
 }
 
-section {
+body::-webkit-scrollbar{
+    width: 0.5rem;
+}
+
+body::-webkit-scrollbar-track{
+    background-color: #c62368;
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color: #ffc0cb;
+}
+
+main{
+    margin-left: 5rem;
+}
+
+section{
     position: relative;
     display: flex;
     flex-direction: column;
@@ -29,7 +52,7 @@ section {
     padding-top: 0px;
 } 
 
-img {
+img{
     width: 100%;
     height: auto;
     max-width: 50vw;
@@ -50,32 +73,38 @@ img:hover{
     transform: rotate(360deg);
 }
 
-a:link {
+
+a:link{
+    color: white;
     background-color: transparent;
     text-decoration: none;
 }
 
-a:visited {
+a:visited{
     color: pink;
     background-color: transparent;
     text-decoration: none;
 }
 
-.box {
+a:active{
+    color: rgba(209, 124, 167, 0.815);
+  }
+
+.box{
     -webkit-transition:  -webkit-transform .2s;
     -moz-transition: -moz-transform .2s;
     -o-transition: -o-transform .2s;
     -ms-transition: -ms-transform .2s; 
     transition: transform .2s; 
 }
-.box:hover {
+.box:hover{
    -webkit-transform:scale(2);
    -moz-transform:scale(2);
    -o-transform:scale(2);
    transform:scale(2);
 }
 
-.spacer {
+.spacer{
     aspect-ratio: 960/300;
     width: 100%;
     background-repeat: no-repeat;
@@ -99,14 +128,14 @@ a:visited {
     background-image: url('./layers/layer4.svg');
 }
 
-.animation-moving {
+.animation-moving{
     position: relative;
     animation-name: try-and-catch-me;
     animation-duration: 4s;
     animation-iteration-count: infinite;
 }
 
-@keyframes try-and-catch-me {
+@keyframes try-and-catch-me{
     0%   {left:-10vw; top:-8vh;}
     25%  {left:5vw; top:-8vh;}
     50%  {left:5vw; top:10vh;}
