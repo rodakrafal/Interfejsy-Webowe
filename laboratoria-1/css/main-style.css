@@ -288,7 +288,16 @@ th, td{
     left: 50%;
     margin-left: -60px;
 }
-  
+
+.schedule {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x:auto;
+    border-spacing: 0;
+    width: 100%;
+  }
+
 .tooltip .tooltiptext::after{
     content: "";
     position: absolute;
@@ -297,7 +306,7 @@ th, td{
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: #23232e transparent transparent transparent;
+    border-color: #23232e transparent;
 }
   
 .tooltip:hover .tooltiptext{
@@ -305,7 +314,7 @@ th, td{
 }
 
 .projects{   
-    background: #c62368;
+    background-color: #c62368;
 }
 
 .laboratory{
@@ -314,4 +323,8 @@ th, td{
 
 .exercises{
     background-color: #ffc0cb;
+}
+
+.lectures{
+    background-color: #ff076e;
 }
