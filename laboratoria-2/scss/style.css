@@ -41,12 +41,19 @@ ul {
 .main-container {
   margin-left: 20%;
   margin-right: 20%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .container-header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -ms-flex-item-align: stretch;
+      -ms-grid-row-align: stretch;
+      align-self: stretch;
 }
 
 .todo-input {
@@ -59,6 +66,10 @@ ul {
   padding: 5px;
 }
 
+.todo-icons:hover {
+  background-color: gold;
+}
+
 .container-header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -66,8 +77,24 @@ ul {
 }
 
 .container-note {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.container-note p {
   text-align: justify;
   text-justify: inter-word;
+}
+
+.container-note-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 @media (max-width: 650px) {

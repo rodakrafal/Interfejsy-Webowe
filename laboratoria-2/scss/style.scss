@@ -41,21 +41,18 @@ ul{
 .main-nav {
     @extend %placement-shared;
     background-color: $primary-color;
-    
 }
 
 .main-container {
     @extend %placement-shared;
     margin-left: 20%;
     margin-right: 20%;
+    flex-direction: column;
 }
-
-// .child-container{
-//     margin: 0%,5%,0%,5%;
-// }
 
 .container-header{
     align-items: center;
+    align-self: stretch;
 }
 
 %placement-of-text{
@@ -73,7 +70,6 @@ ul{
     margin-left: auto;
     margin-right: 5px;
 
-
 }
 
 .todo-icons{
@@ -81,13 +77,25 @@ ul{
 
 }
 
+.todo-icons:hover{
+    background-color: gold;
+}
+
 .container-header{
     display: flex;
 }
 
 .container-note{
-    text-align: justify;
-    text-justify: inter-word;
+    display: flex;
+    flex-direction: column;
+    p{
+        text-align: justify;
+        text-justify: inter-word;
+    }
+}
+
+.container-note-inner{
+    display: flex;
 }
 
 @media (max-width: 650px) {
