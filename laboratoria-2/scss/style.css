@@ -1,0 +1,90 @@
+body {
+  background-color: #44485b;
+}
+
+h1 {
+  color: #cccccc;
+  font-family: Helvetica, sans-serif;
+}
+
+h2 {
+  color: white;
+}
+
+ul {
+  list-style: none;
+}
+
+.push-right {
+  margin-left: auto;
+  margin-right: 20%;
+}
+
+.push-left {
+  margin-left: auto;
+  margin-right: 20%;
+}
+
+.main-nav, .main-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main-nav {
+  background-color: #282a35;
+}
+
+.main-container {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.container-header {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.todo-input {
+  background: #cccccc;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.todo-icons {
+  padding: 5px;
+}
+
+.container-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.container-note {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+@media (max-width: 650px) {
+  .container-header {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .container-note {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .todo-input {
+    margin-right: auto;
+  }
+}
+/*# sourceMappingURL=style.css.map */

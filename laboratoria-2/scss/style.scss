@@ -1,0 +1,105 @@
+$primary-color: #282a35;
+$secondary-color: #44485b;
+$primary-font-color: #cccccc;
+$primary-font: Helvetica, sans-serif;
+
+body{
+    background-color: $secondary-color;
+}
+
+h1{
+    color: $primary-font-color;
+    font-family: $primary-font;
+}
+
+h2{
+    color: white;
+}
+
+ul{
+    list-style: none;
+}   
+
+@mixin adjustment-nav ($placement: 20%){
+    margin-left: auto;
+    margin-right: $placement;
+}
+
+.push-right {
+    @include adjustment-nav;
+}
+
+.push-left {
+    @include adjustment-nav(20%);
+}
+
+%placement-shared{
+    display: flex;
+    align-items: center;
+}
+
+.main-nav {
+    @extend %placement-shared;
+    background-color: $primary-color;
+    
+}
+
+.main-container {
+    @extend %placement-shared;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+// .child-container{
+//     margin: 0%,5%,0%,5%;
+// }
+
+.container-header{
+    align-items: center;
+}
+
+%placement-of-text{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.todo-header{
+    // @extend placement-of-text;
+}
+
+.todo-input{
+    // @extend placement-of-text;
+    background: $primary-font-color;
+    margin-left: auto;
+    margin-right: 5px;
+
+
+}
+
+.todo-icons{
+    padding: 5px;
+
+}
+
+.container-header{
+    display: flex;
+}
+
+.container-note{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+@media (max-width: 650px) {
+    .container-header {
+      flex-direction: column;
+    }
+
+    .container-note{
+        flex-direction: column;
+    }
+
+    .todo-input{
+        margin-right: auto;
+    }
+}
