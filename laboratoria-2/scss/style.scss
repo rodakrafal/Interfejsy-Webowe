@@ -26,11 +26,15 @@ ul{
 }
 
 .push-right {
-    @include adjustment-nav;
+    margin-left: auto;
+    margin-right: 15%;
+    // @include adjustment-nav;
 }
 
 .push-left {
-    @include adjustment-nav(20%);
+    margin-right: auto;
+    margin-left: 8%;
+    // @include adjustment-nav(20%);
 }
 
 %placement-shared{
@@ -45,8 +49,8 @@ ul{
 
 .main-container {
     @extend %placement-shared;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 15%;
+    margin-right: 15%;
     flex-direction: column;
 }
 
@@ -95,7 +99,25 @@ ul{
 }
 
 .container-note-inner{
+    background-color: #cccccc;
+    margin: 10px;
     display: flex;
+
+    p{
+        margin: 10px;
+    }
+}
+
+.container-note-svg{
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    border: #44485b;
+    border: 2px dotted;
+    border-radius: 8px;
 }
 
 @media (max-width: 650px) {

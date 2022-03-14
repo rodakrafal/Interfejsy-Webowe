@@ -17,12 +17,12 @@ ul {
 
 .push-right {
   margin-left: auto;
-  margin-right: 20%;
+  margin-right: 15%;
 }
 
 .push-left {
-  margin-left: auto;
-  margin-right: 20%;
+  margin-right: auto;
+  margin-left: 8%;
 }
 
 .main-nav, .main-container {
@@ -39,8 +39,8 @@ ul {
 }
 
 .main-container {
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 15%;
+  margin-right: 15%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -92,9 +92,34 @@ ul {
 }
 
 .container-note-inner {
+  background-color: #cccccc;
+  margin: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.container-note-inner p {
+  margin: 10px;
+}
+
+.container-note-svg {
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: #44485b;
+  border: 2px dotted;
+  border-radius: 8px;
 }
 
 @media (max-width: 650px) {
