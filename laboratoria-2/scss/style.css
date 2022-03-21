@@ -59,6 +59,30 @@ form input, form button {
   background: white;
 }
 
+form .container {
+  padding: 0.25rem;
+  font-size: 1.5rem;
+  border: none;
+  background: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+form .container .checkmark {
+  background-color: #f7fffe;
+}
+
 form button {
   color: #ff6f47;
   background: #f7fffe;
@@ -162,7 +186,8 @@ h2 {
 
 .fa-trash,
 .fa-check,
-.fa-reply {
+.fa-reply,
+.fa-ban {
   pointer-events: none;
 }
 
@@ -187,5 +212,82 @@ h2 {
 
 .hidden {
   display: none !important;
+}
+
+.modal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  color: white;
+  position: fixed;
+  top: 25vh;
+  left: 25vw;
+  background: rgba(0, 0, 0, 0.734);
+  width: 50%;
+  height: 20%;
+  z-index: 1;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.modal-content {
+  pointer-events: none;
+}
+
+.modal-buttons {
+  padding-left: 10vh;
+  max-width: 25vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.modal-buttons button {
+  pointer-events: all;
+}
+
+.modal-agree {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  border: none;
+  background: white;
+  cursor: pointer;
+  color: #4fd866;
+}
+
+.modal-agree:hover {
+  background-color: #4fd866;
+  color: #f7fffe;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.modal-cancel {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  border: none;
+  background: white;
+  cursor: pointer;
+  color: #ff6f47;
+}
+
+.modal-cancel:hover {
+  background-color: #ff6f47;
+  color: #f7fffe;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 /*# sourceMappingURL=style.css.map */

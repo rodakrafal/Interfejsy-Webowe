@@ -46,6 +46,18 @@ form {
         border: none;
         background: white;
     }
+
+    .container{
+        padding: 0.25rem;
+        font-size: 1.5rem;
+        border: none;
+        background: white;
+        @include flex-center();
+
+        .checkmark{
+            background-color: #f7fffe;
+        }
+    }
 }
 
 form button {
@@ -127,7 +139,8 @@ h2{
 
 .fa-trash,
 .fa-check,
-.fa-reply {
+.fa-reply,
+.fa-ban {
   pointer-events: none;
 }
 
@@ -147,8 +160,75 @@ h2{
   .time-inner{
     opacity: 1;
   }
+
 }
 
 .hidden {
     display: none !important;
+}
+
+
+@mixin modal-buttons(){
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    border: none;
+    background: white;
+    cursor: pointer;
+
+}
+
+.modal{
+    // display: none;
+    display: flex;
+    position: absolute;
+    color:white;
+    position:fixed;
+    top:25vh;
+    left:25vw;
+    background:rgba(0, 0, 0, 0.734);
+    width:50%;
+    height:20%;
+    z-index: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+}
+
+.modal-content {
+    pointer-events: none;
+}
+
+.modal-buttons {
+    padding-left: 10vh;
+    max-width: 25vh;
+    display: flex;
+    justify-content:space-around;
+
+    button{
+        pointer-events: all;
+    }
+}
+
+.modal-agree{
+    @include modal-buttons();
+    color: #4fd866;
+}
+
+.modal-agree:hover{
+    background-color: #4fd866;
+    color: #f7fffe;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-cancel{
+    @include modal-buttons();
+    color: #ff6f47;
+}
+
+.modal-cancel:hover{
+    background-color: #ff6f47;
+    color:  #f7fffe;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }

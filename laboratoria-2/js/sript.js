@@ -5,9 +5,17 @@ let idNumber = 0;
 let deletedElement;
 
 const todoInput = document.querySelector(".todo-input");
+const todoSearch = document.querySelector(".todo-search");
+const caseSensitive = document.querySelector("#case-sensitive");
+
+const modal = document.querySelector(".modal");
+const modalAgree = document.querySelector(".modal-agree");
+const modalCancel = document.querySelector(".modal-cancel");
+
 const todoButtonAdd = document.querySelector(".todo-button-add");
 const todoContainer = document.querySelector(".todo-container");
 const filterOption = document.querySelector(".filter-todo");
+
 class elementToDo{
     constructor(name, id,state) {
         this.name = name;
@@ -30,7 +38,6 @@ class elementToDo{
         const elementDate = document.createElement("span");
         elementDate.classList.add("time-inner")
         
-
         if(state){
             listElement.classList.add("completed-task");
             elementDate.innerText = new Date(Date.now()).toDateString();
@@ -57,6 +64,7 @@ class elementToDo{
                 elementDate.innerText = "";
             }
             saveTodo();
+            searchTodos();
         };
 
         elementContainer.appendChild(completedButton);
@@ -67,17 +75,22 @@ class elementToDo{
         deleteButton.id = (`deleteButton${id}`)
 
         $(document).on("click", `#${deleteButton.id}` , function() {
-            const index = todoElements.indexOf(todoElements.find((el) => el.id == id));
-            if(index != -1){
-                deletedElement = [todoElements[index], listElement];
-                todoElements.splice(index, 1);
-            }
-            $(`#${id}`).fadeOut("normal", function() {
-                $(this).remove();
-            });
-            $("#recover-container").fadeIn();
-            saveTodo();
 
+            $(".modal").show();
+
+            $(".modal-agree").on("click", function(){
+                const index = todoElements.indexOf(todoElements.find((el) => el.id == id));
+                if(index != -1){
+                    deletedElement = [todoElements[index], listElement];
+                    todoElements.splice(index, 1);
+                }
+                $(`#${id}`).fadeOut("normal", function() {
+                    $(this).remove();
+                });
+                $("#recover-container").fadeIn();
+                saveTodo();
+                $(".modal").hide();
+            });           
         });
 
         elementContainer.appendChild(deleteButton);
@@ -87,8 +100,7 @@ class elementToDo{
 }
 
 const checkIfEmpty = (string) => {
-    if(!string.replace(/\s+/, '').length ) {
-        alert( "The Name field is empty!" );
+    if(!string.replace(/\s+/, '').length) {
         return false;
     } else return true;
 }
@@ -98,17 +110,78 @@ const addTodoElement = (event) => {
     const inputName = todoInput.value;
     todoInput.value = "";
     if (!checkIfEmpty(inputName)){
+        alert( "The Name field is empty!" );
         return false;
     }
     
     const newTodoElement = new elementToDo(inputName, idNumber, false);
     todoElements.push(newTodoElement);  
     saveTodo();
-
+    
     todoContainer.appendChild(newTodoElement.createElement(inputName, idNumber));
     idNumber++;
-
+    searchTodos();
+    // filterTodo();
 }
+
+const changeCaseSen = () => {
+    searchTodos();
+}
+
+const searchTodos = () => {
+    const inputName = todoSearch.value;
+    if(!inputName.replace(/\s+/, '').length ) {
+        todoElements.forEach(function(todo){
+            $(`#${todo.id}`).fadeIn();
+        });
+    } else {
+        let checkBox = document.querySelector('#case-sensitive');
+        if(checkBox.checked){
+            todoElements.forEach(function(todo){
+                if (todo.name.indexOf(inputName) > -1) {
+                    $(`#${todo.id}`).fadeIn();
+                } else {
+                    $(`#${todo.id}`).fadeOut();
+                }
+            });
+        } else {
+            todoElements.forEach(function(todo){
+                if (todo.name.toLowerCase().indexOf(inputName.toLowerCase()) > -1) {
+                    $(`#${todo.id}`).fadeIn();
+                } else {
+                    $(`#${todo.id}`).fadeOut();
+                }
+            });
+            
+        }
+    }
+}
+  
+// const filterTodo = () => {
+//     todoElements.forEach(function(todo) {
+//         switch ($('#todos').val()) {
+//         case "all":
+//             $(`#${todo.id}`).fadeIn();
+//             break;
+//         case "completed":
+//             if (todo.state) {
+//                 $(`#${todo.id}`).fadeIn();
+//             } else {
+//                 $(`#${todo.id}`).fadeOut();
+//             }
+//             break;
+//         case "uncompleted":
+//             if (!todo.state) {
+//                 $(`#${todo.id}`).fadeIn();
+//             } else {
+//                 $(`#${todo.id}`).fadeOut();
+//             }
+//             break;
+//         }
+//     });
+// }
+
+
 
 $(document).on("click", ".todo-recover" , function() {
     if (deletedElement === undefined){
@@ -120,6 +193,7 @@ $(document).on("click", ".todo-recover" , function() {
         deletedElement = undefined;
         saveTodo();
         $("#recover-container").fadeOut();
+        // filterTodo();
     }
 });
 
@@ -127,7 +201,21 @@ const saveTodo = () => {
     window.localStorage.setItem("todos", JSON.stringify(todoElements));
 };
 
-document.body.onload  = () => {
+
+$('body').click(function (event) 
+{
+   if(!$(event.target).closest('.modal').length && !$(event.target).is('.modal')) {
+     $(".modal").hide();
+   }     
+});
+
+$(modalCancel).click(function () 
+{
+    $(".modal").hide();
+});
+
+document.body.onload = () => {
+    $(".modal").hide();
     let todos ;
     if (localStorage.getItem("todos") === null) {
         todos = [];
@@ -142,8 +230,13 @@ document.body.onload  = () => {
         if(idNumber < todo.id+1){
             idNumber=todo.id+1;
         }
-        
     });
+    searchTodos();
+    // filterTodo();
 }
 
-todoButtonAdd.addEventListener("click", addTodoElement)
+todoButtonAdd.addEventListener("click", addTodoElement);
+// filterOption.addEventListener("click", filterTodo);
+todoSearch.addEventListener("keyup", searchTodos);
+caseSensitive.addEventListener("change", changeCaseSen);
+modalCancel.addEventListener("click", closeModal);

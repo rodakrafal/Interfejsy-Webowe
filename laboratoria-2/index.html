@@ -8,13 +8,7 @@
       href="https://fonts.googleapis.com/css?family=Poppins&display=swap"
       rel="stylesheet"
     />
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
-      integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
-      crossorigin="anonymous"
-    /> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -29,19 +23,42 @@
             <button class="todo-button-add" type="submit">
               <i class="fa fa-plus-square"></i>
             </button>
+
+            <input type="text" class="todo-search" />
             <button class="todo-button-search" type="submit">
-                <i class="fa fa-search"></i>
-              </button>
+              <i class="fa fa-search"></i>
+            </button>
+
+            <label class="container" for="case-sensitive">
+                <input type="checkbox" id="case-sensitive" name="case-sensitive">
+                <span class="checkmark"></span>
+                Case
+            </label>
+<!-- 
             <div class="select">
-              <select name="todos" class="filter-todo">
+              <select name="todos" id="todos" class="filter-todo">
                 <option value="all">All</option>
                 <option value="completed">Completed</option>
                 <option value="uncompleted">Uncompleted</option>
               </select>
-            </div>
+            </div> -->
+
         </form>
     </header>
 
+    <div class="modal">
+        <div class="modal-content">
+            <h2> Are you sure you want to delete this task?</h2>
+            <div class="modal-buttons">
+                <button class="modal-agree" type="submit">
+                    <i class="fa fa-check"></i>
+                </button>
+                <button class="modal-cancel" type="submit">
+                    <i class="fa fa-ban"></i>              
+                </button>
+            </div>
+        </div>
+    </div>  
 
 
     <div class="todo-container">
@@ -49,7 +66,7 @@
     <div class="recover" id="recover-container">
         <button class="todo-recover" type="submit">
             Recover last element
-            <i class="fa fa-reply"></i>
+            <i class="fa fa-xmark"></i>
         </button>
     </div>
 
