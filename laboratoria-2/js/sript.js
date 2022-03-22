@@ -30,6 +30,8 @@ class elementToDo{
         const listElement = document.createElement("li");
         elementContainer.classList.add("todo-list")
         listElement.id = id;
+        listElement.classList.add("box")
+
 
         const elementText = document.createElement("span");
         elementText.classList.add("text-header")
@@ -50,11 +52,27 @@ class elementToDo{
         elementContainer.appendChild(elementText);
         elementContainer.appendChild(elementDate);
 
-        const completedButton = document.createElement("button");
-        completedButton.innerHTML = `<i class="fa fa-check"></i>`;
-        completedButton.classList.add("complete-btn");
+        const buttonDiv = document.createElement("div");
+        buttonDiv.classList.add("button-todo-container");
+    
+        // const completedButton = document.createElement("button");
+        // completedButton.innerHTML = `<i class="fa fa-check"></i>`;
+        // completedButton.classList.add("complete-btn");
 
-        completedButton.onclick = () => {
+        // completedButton.onclick = () => {
+        //     this.state = !this.state;
+        //     if(this.state){
+        //         elementDate.innerText = new Date(Date.now()).toDateString();
+        //         listElement.classList.add("completed-task");
+        //     } else{
+        //         listElement.classList.remove("completed-task");
+        //         elementDate.innerText = "";
+        //     }
+        //     saveTodo();
+        //     searchTodos();
+        // };
+
+        listElement.onclick = () => {
             this.state = !this.state;
             if(this.state){
                 elementDate.innerText = new Date(Date.now()).toDateString();
@@ -67,8 +85,8 @@ class elementToDo{
             searchTodos();
         };
 
-        elementContainer.appendChild(completedButton);
-
+        // buttonDiv.appendChild(completedButton);
+        
         const deleteButton = document.createElement("button");
         deleteButton.innerHTML = `<i class="fa fa-trash"></i>`;
         deleteButton.classList.add("delete-btn");
@@ -93,8 +111,8 @@ class elementToDo{
             });           
         });
 
-        elementContainer.appendChild(deleteButton);
-
+        buttonDiv.appendChild(deleteButton);
+        elementContainer.appendChild(buttonDiv)
         return listElement;
     };
 }
