@@ -29,17 +29,17 @@ class elementToDo{
         elementContainer.classList.add("todo");
 
         const listElement = document.createElement("li");
-        elementContainer.classList.add("todo-list")
+        elementContainer.classList.add("todo-list");
         listElement.id = id;
         listElement.classList.add("box")
 
 
         const elementText = document.createElement("span");
-        elementText.classList.add("text-header")
+        elementText.classList.add("text-header");
         elementText.innerText = todoText;
 
         const elementDate = document.createElement("span");
-        elementDate.classList.add("time-inner")
+        elementDate.classList.add("time-inner");
         
         if(state){
             listElement.classList.add("completed-task");
@@ -91,7 +91,7 @@ class elementToDo{
         const deleteButton = document.createElement("button");
         deleteButton.innerHTML = `<i class="fa fa-trash"></i>`;
         deleteButton.classList.add("delete-btn");
-        deleteButton.id = (`deleteButton${id}`)
+        deleteButton.id = (`deleteButton${id}`);
 
         $(document).on("click", `#${deleteButton.id}` , function() {
 
@@ -113,7 +113,7 @@ class elementToDo{
         });
 
         buttonDiv.appendChild(deleteButton);
-        elementContainer.appendChild(buttonDiv)
+        elementContainer.appendChild(buttonDiv);
         return listElement;
     };
 }
