@@ -13,6 +13,7 @@ const modalAgree = document.querySelector(".modal-agree");
 const modalCancel = document.querySelector(".modal-cancel");
 
 const todoButtonAdd = document.querySelector(".todo-button-add");
+const todoButtonSearch = document.querySelector(".todo-button-search");
 const todoContainer = document.querySelector(".todo-container");
 const filterOption = document.querySelector(".filter-todo");
 
@@ -123,6 +124,10 @@ const checkIfEmpty = (string) => {
     } else return true;
 }
 
+const searchButtonAction = (event) => {
+    event.preventDefault();
+}
+
 const addTodoElement = (event) => {
     event.preventDefault();
     const inputName = todoInput.value;
@@ -199,8 +204,6 @@ const searchTodos = () => {
 //     });
 // }
 
-
-
 $(document).on("click", ".todo-recover" , function() {
     if (deletedElement === undefined){
         alert( "There is no deleted element!" );
@@ -257,4 +260,4 @@ todoButtonAdd.addEventListener("click", addTodoElement);
 // filterOption.addEventListener("click", filterTodo);
 todoSearch.addEventListener("keyup", searchTodos);
 caseSensitive.addEventListener("change", changeCaseSen);
-modalCancel.addEventListener("click", closeModal);
+todoButtonSearch.addEventListener("click", searchButtonAction)
