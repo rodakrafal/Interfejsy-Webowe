@@ -178,6 +178,11 @@ h2 {
           flex-direction: column;
 }
 
+.todo-input,
+.todo-search {
+  background-color: #ced2e9;
+}
+
 .todo-list {
   min-width: 30%;
   list-style: none;
