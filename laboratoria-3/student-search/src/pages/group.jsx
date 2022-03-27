@@ -1,32 +1,32 @@
 import { useParams } from "react-router-dom";
-import { InformationStudentsContext } from "../data/informationStudentsContext";
+import { InformationGroupsContext } from "../data/informationGroupsContext";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 
 
-export default function Student() {
+export default function Group() {
     let params = useParams();
     
-    const [students, setStudents] = useContext(InformationStudentsContext);
+    const [groups, setGroups] = useContext(InformationGroupsContext);
 
-    let student = students.find((student) => student.number === parseInt(params.studentId, 10));
+    let group = groups.find((group) => group.number === parseInt(params.groupId, 10));
 
     return (
         <main style={{ padding: "1rem" }}>
            <p>
-            {student.name}
+            {group.name}
             </p>
-            {student.tags.map((item) =>
+            {group.tags.map((item) =>
                 <p> {item}</p>
             )}
           <p>
-            {student.name}: {student.number}
+            {group.name}: {group.number}
           </p>
-            {student.subjects.map((item) =>
+            {group.subjects.map((item) =>
                 <p> {item}</p>
             )}
              <p>
-            {student.description}
+            {group.description}
             </p>
             <NavLink
                 style={({ isActive }) => ({
@@ -34,8 +34,8 @@ export default function Student() {
                   margin: "1rem 0",
                   color: isActive ? "red" : "",
                 })}
-                to={`/students/${student.number}/student-contact`}
-                key={student.number}
+                to={`/groups/${group.number}/group-contact`}
+                key={group.number}
               >
                 Wyślij Mail!
             </NavLink>

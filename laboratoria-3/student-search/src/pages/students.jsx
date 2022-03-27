@@ -1,14 +1,30 @@
-import { useState } from "react";
-import { NavLink, Outlet, useSearchParams } from "react-router-dom";
-import { getStudents } from "../data/information";
+import { useContext, useState } from "react";
+import { NavLink, Outlet, Route } from "react-router-dom";
+import Button from '@mui/material/Button';
+import { InformationStudentsContext } from "../data/informationStudentsContext";
 
 export default function Students() {
-  let students = getStudents();
+  
+  const [students, setStudents] = useContext(InformationStudentsContext);
+
   let [search, setSearch] = useState("");
 
   return (
     <>
-      <h1> Students </h1>
+      <div style={{ display: "flex" }}>
+        <h1> Students </h1> 
+          {
+             <NavLink
+             style={({ isActive }) => ({
+               display: "block",
+               margin: "1rem 0",
+               color: isActive ? "red" : "",
+             })}
+             to={`/add-student`}
+           > Add new listing!
+           </NavLink>
+          }
+      </div>
       <div style={{ display: "flex" }}>
         <nav
           style={{
@@ -43,7 +59,7 @@ export default function Students() {
               let filteredName = regexName.exec(search);
               let desc, tags, subjects, name;
               
-              if(filteredDescription && filteredDescription[1].length > 0){
+              if(filteredDescription){
                 desc = filteredDescription[1].split(" ");
               }
               if(filteredTags){
@@ -87,7 +103,7 @@ export default function Students() {
                 key={student.number}
               >
                 {student.name}
-              </NavLink>
+              </NavLink>  
             ))}
         </nav>
         <Outlet />
