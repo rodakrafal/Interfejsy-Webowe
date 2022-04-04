@@ -11,6 +11,7 @@ import StudentContact from './pages/student-contact';
 import GroupContact from './pages/group-contact';
 import StudentAdd from './pages/add-student';
 import GroupAdd from './pages/add-group';
+import Info from './pages/info';
 import { InformationStudentsProvider } from './data/informationStudentsContext';
 import { InformationGroupsProvider } from './data/informationGroupsContext';
 
@@ -23,35 +24,15 @@ ReactDOM.render(
     <Route path="/" element={<App />}>
         <Route
           index
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>Select an option</p>
-            </main>
-          }
+          element={<Info/>}
         />
         <Route path="groups" element={<Groups />}>
-          <Route
-            index
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>Select a group!</p>
-              </main>
-            }
-            />
           <Route path=":groupId" element={<Group />} />
         </Route>
         <Route path="groups/:groupId/group-contact" element={<GroupContact />} />
         <Route path="add-group" element={<GroupAdd />} />
 
         <Route path="students" element={<Students />}>
-          <Route
-            index
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>Select a student!</p>
-              </main>
-            }
-            />
           <Route path=":studentId" element={<Student />} />
         </Route>
         <Route path="students/:studentId/student-contact" element={<StudentContact />} />

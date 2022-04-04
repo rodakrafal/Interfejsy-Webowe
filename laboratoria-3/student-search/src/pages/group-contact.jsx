@@ -1,5 +1,4 @@
-import { useParams } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useContext } from 'react';
 import { InformationGroupsContext } from "../data/informationGroupsContext";
 
@@ -7,6 +6,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EmailIcon from '@mui/icons-material/Email';
 
 const style = {
     position: 'absolute',
@@ -27,6 +28,7 @@ export default function GroupContact() {
     let group = groups.find((group) => group.number === parseInt(params.groupId, 10));
 
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -39,11 +41,10 @@ export default function GroupContact() {
     }, [open]);
 
     return (
-        <main style={{ padding: "1rem" }}>
-           <p>
-            {group.name}
-            </p>
-            <Button onClick={handleOpen}>Send mail!</Button>
+        <main>
+            <div className="information-container">
+                <h1 style={{ "font-size": "24px" }}>{group.name}</h1>
+             </div>
             <Modal
             open={open}
             onClose={handleClose}
@@ -59,16 +60,25 @@ export default function GroupContact() {
                 </Typography>
             </Box>
             </Modal>
-            <NavLink
-                style={({ isActive }) => ({
-                  display: "block",
-                  margin: "1rem 0",
-                  color: isActive ? "red" : "",
-                })}
-                to={`/groups`}
-              >
+            <div className="contact-buttons">
+                <Button
+                variant="contained"
+                startIcon={<ArrowBackIcon />}
+                onClick={() => {
+                    navigate(`/groups`);
+                }}
+                sx={{   margin: "10px" }}
+                >
                 Go back!
-            </NavLink>
+                </Button>
+                <Button
+                variant="contained"
+                endIcon={<EmailIcon />}
+                onClick={handleOpen}
+                >
+                Send Email!
+                </Button>
+            </div>         
         </main>
       );
 }

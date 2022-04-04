@@ -1,5 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import { InformationStudentsContext } from "../data/informationStudentsContext";
+import { useNavigate } from "react-router-dom";
+
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function StudentAdd() {
   const [students, setStudents] = useContext(InformationStudentsContext);
@@ -8,6 +14,8 @@ export default function StudentAdd() {
   const [tags, setTags] = useState("");
   const [subjects, setSubjects] = useState("");
   const [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
 
   const updateName = (event) => {
     setName(event.target.value);
@@ -27,31 +35,103 @@ export default function StudentAdd() {
 
   const addStudent = (event) => {
     event.preventDefault();
-    setStudents(prevStudents => [...prevStudents, {
-      name: name,
-      description: description,
-      tags: tags.split(" "),
-      subjects: subjects.split(" "),
-      email: email,
-      number: prevStudents.length + 1,
-    }]);
+    const student = students.find((student) => student.name === name);
+    if (student) {
+      alert("The student is already in the list");
+      return;
+    }
+    const emailStudent = students.find((student) => student.email === email);
+    if (emailStudent) {
+      alert("The email is already in the list");
+      return;
+    }
+
+    if (
+      name === "" ||
+      email === "" ||
+      tags === "" ||
+      subjects === "" ||
+      description === ""
+    ) {
+      alert("You must fill all the fields");
+      return;
+    }
+
+    setStudents((prevStudents) => [
+      ...prevStudents,
+      {
+        name: name,
+        description: description,
+        tags: tags.split(" "),
+        subjects: subjects.split(" "),
+        email: email,
+        number: prevStudents.length + 1,
+      },
+    ]);
+    navigate(`/students`);
   };
 
-    return (
-        <main style={{ padding: "1rem" }}>
-           <p>
-             hi!
-            </p>
-            {
-              <form>
-                <input type="text" placeholder="name" value={name} onChange={updateName}/>
-                <input type="text" placeholder="description" value={description} onChange={updateDescription}/>
-                <input type="text" placeholder="tags" value={tags} onChange={updateTags}/>
-                <input type="text" placeholder="subjects" value={subjects} onChange={updateSubjects}/>
-                <input type="text" placeholder="email" value={email} onChange={updateEmail}/>
-                <button onClick={addStudent}>Add Student</button>
-              </form>
-            }
-        </main>
-    );
+  return (
+    <div className="body-container">
+      <div className="information-container">
+        <h1 style={{ "font-size": "24px" }}>Add Student</h1>
+      </div>
+
+      <TextField
+        sx={{ minWidth: "50%", maxWidth: "50%" }}
+        required
+        label="Name"
+        variant="standard"
+        onChange={updateName}
+      />
+      <TextField
+        sx={{ minWidth: "50%", maxWidth: "50%" }}
+        required
+        label="Tags"
+        variant="standard"
+        onChange={updateTags}
+      />
+      <TextField
+        sx={{ minWidth: "50%", maxWidth: "50%" }}
+        required
+        label="Subjects"
+        variant="standard"
+        onChange={updateSubjects}
+      />
+      <TextField
+        sx={{ minWidth: "50%", maxWidth: "50%" }}
+        required
+        label="Description"
+        variant="standard"
+        onChange={updateDescription}
+      />
+      <TextField
+        sx={{ minWidth: "50%", maxWidth: "50%" }}
+        required
+        label="Email"
+        variant="standard"
+        onChange={updateEmail}
+      />
+      
+      <div className="contact-buttons">
+                <Button
+                variant="contained"
+                startIcon={<ArrowBackIcon />}
+                onClick={() => {
+                    navigate(`/students`);
+                }}
+                sx={{   margin: "10px" }}
+                >
+                Go back!
+                </Button>
+                <Button
+                variant="contained"
+                startIcon={<AddBoxIcon />}
+                onClick={addStudent}
+              >
+                Add new Student
+              </Button>
+            </div>         
+    </div>
+  );
 }
