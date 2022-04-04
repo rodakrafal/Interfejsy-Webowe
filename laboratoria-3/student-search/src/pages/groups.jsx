@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import GroupAdd from "./add-group";
 import { InformationGroupsContext } from "../data/informationGroupsContext";
 
 import Button from "@mui/material/Button";
@@ -28,10 +28,12 @@ export default function Groups() {
   const handleChange = (event) => {
     setCategory(event.target.value);
   };
+
   return (
     <>
     <div className="body-container">
       <div className="body-header">
+
             <TextField
               label="Enter search criteria"
               variant="standard"
@@ -116,17 +118,6 @@ export default function Groups() {
               ) {return group.name;}
             })
             .map((group) => (
-              // <NavLink
-              //   style={({ isActive }) => ({
-              //     display: "block",
-              //     margin: "1rem 0",
-              //     color: isActive ? "red" : "",
-              //   })}
-              //   to={`/groups/${group.number}`}
-              //   key={group.number}
-              // >
-              //   {group.name}
-              // </NavLink>  
               <Accordion sx={{minWidth:'75%', maxWidth:'75%'}} key={group.id}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}

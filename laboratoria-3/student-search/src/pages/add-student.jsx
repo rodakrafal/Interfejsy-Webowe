@@ -74,7 +74,7 @@ export default function StudentAdd() {
   return (
     <div className="body-container">
       <div className="information-container">
-        <h1 style={{ "font-size": "24px" }}>Add Student</h1>
+        <h1 style={{ "fontSize": "24px" }}>Add Student</h1>
       </div>
 
       <TextField
