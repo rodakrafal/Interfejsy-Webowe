@@ -5,7 +5,7 @@ export const InformationGroupsContext = createContext();
 export const InformationGroupsProvider = (props) => {
   const [groups, setGroups] = useState([
     {
-      name: "Grupa 1",
+      name: "Normalna grupa",
       number: 1,
       description: "Testowy tekst poszukiwania grupy",
       tags: ["python", "backend", "flask"],
@@ -26,7 +26,7 @@ export const InformationGroupsProvider = (props) => {
       ],
     },
     {
-      name: "Grupa 2",
+      name: "Legendy",
       number: 2,
       description:
         "Zaskakująco inteligentna grupa w której na pewno nie ma prowadzących",
@@ -56,7 +56,7 @@ export const InformationGroupsProvider = (props) => {
       ],
     },
     {
-      name: "Grupa 3",
+      name: "VHDL grupa 2",
       number: 3,
       description: "Nie mam pojęcia co robimy, ale chyba idzie to dobrze?",
       tags: ["pomocy", "tag", "student"],
