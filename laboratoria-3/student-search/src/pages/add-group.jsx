@@ -77,8 +77,8 @@ export default class GroupAdd extends React.Component {
     const group = {
       name: this.state.name,
       description: this.state.description,
-      tags: this.state.tags.split(" "),
-      subjects: this.state.subjects.split(" "),
+      tags: this.state.tags.split(","),
+      subjects: this.state.subjects.split(","),
       email: this.state.email,
       number: this.props.groups.length + 1,
       people: this.state.people,

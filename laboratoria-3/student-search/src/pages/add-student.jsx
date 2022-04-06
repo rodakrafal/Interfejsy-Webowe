@@ -62,8 +62,8 @@ export default function StudentAdd() {
       {
         name: name,
         description: description,
-        tags: tags.split(" "),
-        subjects: subjects.split(" "),
+        tags: tags.split(","),
+        subjects: subjects.split(","),
         email: email,
         number: prevStudents.length + 1,
       },
