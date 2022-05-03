@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { InformationStudentsContext } from "../data/informationStudentsContext";
+import { ListOfStudentsContext } from "../data/information";
 
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -17,8 +17,21 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Divider from "@mui/material/Divider";
 import SendIcon from "@mui/icons-material/Send";
 
-export default function Students() {
-  const [students, setStudents] = useContext(InformationStudentsContext);
+const Students = () => {
+  const { students, setStudents } = useContext(ListOfStudentsContext);
+
+  useEffect(() => {
+    setStudents(
+      students.map((elem) => {
+        if(elem.image === ""){
+          fetch("https://picsum.photos/210/300").then((img) => {
+            elem.image = img.url;
+          });
+        }
+        return elem;
+      })
+    );
+  }, []);
 
   const [category, setCategory] = useState(0);
   const navigate = useNavigate();
@@ -263,3 +276,5 @@ export default function Students() {
     </>
   );
 }
+
+export default Students;

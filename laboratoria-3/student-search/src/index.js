@@ -7,6 +7,13 @@ import { ThemeProvider } from "@emotion/react";
 import lightTheme from "./styles/Theme/LightTheme";
 import { InformationStudentsProvider } from "./data/informationStudentsContext";
 import { InformationGroupsProvider } from "./data/informationGroupsContext";
+
+import {
+  ListOfGroupsProvider,
+  ListOfStudentsProvider,
+} from "./data/information";
+
+
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
@@ -15,7 +22,11 @@ ReactDOM.render(
       <ThemeProvider theme={lightTheme}>
         <InformationGroupsProvider>
           <InformationStudentsProvider>
-            <NavigateApp />
+              <ListOfStudentsProvider>
+            <ListOfGroupsProvider>
+                <NavigateApp />
+                </ListOfGroupsProvider>
+          </ListOfStudentsProvider>
           </InformationStudentsProvider>
         </InformationGroupsProvider>
       </ThemeProvider>
