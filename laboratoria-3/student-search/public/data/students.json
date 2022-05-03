@@ -5,7 +5,8 @@
       "description": "Testowy tekst poszukiwania grupy",
       "tags": ["python", "backend", "flask"],
       "subjects": ["Inżynieria obrazów", "Projektowanie i programowanie gier"],
-      "email": "test@mail.com"
+      "email": "test@mail.com",
+      "image": ""
     },
     {
       "name": "Adam Kowalski",
@@ -13,7 +14,8 @@
       "description": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
       "tags": ["js", "jquery", "frontend", "python"],
       "subjects": ["PIWo", "Projektowanie interesów webowych 'O"],
-      "email": "test2@mail.com"
+      "email": "test2@mail.com",
+      "image": ""
     },
     {
       "name": "Cariusz Daban",
@@ -21,7 +23,8 @@
       "description": "lorem ipsum, text, testowy",
       "tags": ["vhdl", "bash", "linux"],
       "subjects": ["SO2", "UCISW"],
-      "email": "test3@mail.com"
+      "email": "test3@mail.com",
+      "image": ""
     },
     {
       "name": "Parek Miasecki",
@@ -29,7 +32,8 @@
       "description": "lorem ipsum, text, testowy",
       "tags": ["c++", "c", "visual studio"],
       "subjects": ["PP", "Podstawy programowania"],
-      "email": "test3@mail.com"
+      "email": "test3@mail.com",
+      "image": ""
     }
 ]
 

@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useContext } from 'react';
-import { InformationStudentsContext } from "../data/informationStudentsContext";
+import axios from "axios";
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -23,9 +23,17 @@ const style = {
 
 export default function StudentContact() {
     let params = useParams();
-    const [students, setStudents] = useContext(InformationStudentsContext);
+    const [students, setStudents] = useState([]);
+    const [student, setStudent] = useState(null);
 
-    let student = students.find((student) => student.number === parseInt(params.studentId, 10));
+    useEffect(() => {
+        axios
+          .get("http://localhost:3000/data/students.json")
+          .then((response) => {
+            setStudents(response.data);
+          });
+        student = students.find((student) => student.number === parseInt(params.studentId, 10));
+      }, []);
 
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();

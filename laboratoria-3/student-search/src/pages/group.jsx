@@ -1,13 +1,21 @@
 import { useParams } from "react-router-dom";
-import { InformationGroupsContext } from "../data/informationGroupsContext";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
 export default function Group() {
     let params = useParams();
     
-    const [groups, setGroups] = useContext(InformationGroupsContext);
+    const [groups, setGroups] = useState([]);
+
+    useEffect(() => {
+      axios
+        .get("http://localhost:3000/data/groups.json")
+        .then((response) => {
+          setGroups(response.data);
+        });
+    }, []);
 
     let group = groups.find((group) => group.number === parseInt(params.groupId, 10));
 

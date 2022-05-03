@@ -72,8 +72,6 @@ function App() {
           </Toolbar>
         </AppBar>
       </Box>
-
-      <Outlet />
     </>
   );
 }

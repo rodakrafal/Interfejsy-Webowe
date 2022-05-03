@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
-import React, { useEffect, useState, useContext } from 'react';
-import { InformationGroupsContext } from "../data/informationGroupsContext";
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -23,7 +23,15 @@ const style = {
 
 export default function GroupContact() {
     let params = useParams();
-    const [groups, setGroups] = useContext(InformationGroupsContext);
+    const [groups, setGroups] = useState([]);
+
+    useEffect(() => {
+      axios
+        .get("http://localhost:3000/data/groups.json")
+        .then((response) => {
+          setGroups(response.data);
+        });
+    }, []);
 
     let group = groups.find((group) => group.number === parseInt(params.groupId, 10));
 

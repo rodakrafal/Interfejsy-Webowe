@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GroupAdd from "./add-group";
-import { InformationGroupsContext } from "../data/informationGroupsContext";
+import axios from "axios";
 
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -19,7 +19,15 @@ import Divider from "@mui/material/Divider";
 import SendIcon from "@mui/icons-material/Send";
 
 export default function Groups() {
-  const [groups, setGroups] = useContext(InformationGroupsContext);
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/data/groups.json")
+      .then((response) => {
+        setGroups(response.data);
+      });
+  }, []);
 
   const [category, setCategory] = useState(0);
   const navigate = useNavigate();

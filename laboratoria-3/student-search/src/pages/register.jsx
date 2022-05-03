@@ -89,8 +89,7 @@ function Register() {
     } else setEmailError(false);
   }, [values.email]);
 
-  const handleRegister = (e) => {
-    e.preventDefault();
+  const handleRegister = () => {
 
     setMessage("");
     setSuccessful(false);
@@ -115,6 +114,8 @@ function Register() {
           >
             {!successful && (
               <div>
+
+                <div className="form-group">
                 <TextField
                     required={true}
                     id="outlined-required-name"
@@ -123,10 +124,15 @@ function Register() {
                     onChange={handleChange("username")}
                     error={nameError}
                 />
+                </div>
+                
+                <div className="form-group">
                  {nameError && (
                   <Alert severity="warning">The name is not valid!</Alert>
                 )}
-
+                </div>
+                
+                <div className="form-group">
                 <TextField
                     required={true}
                     id="outlined-required-email"
@@ -135,10 +141,15 @@ function Register() {
                     onChange={handleChange("email")}
                     error={emailError}
                 />
+                </div>
+
+                <div className="form-group">
                  {emailError && (
                   <Alert severity="warning">The email is not valid!</Alert>
                 )}
+                </div>
 
+                <div className="form-group">
                 <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
                     Password
@@ -169,12 +180,16 @@ function Register() {
                     label="Password"
                   />
                 </FormControl>
+                </div>
+
+                <div className="form-group">
                 {passwordError && (
                   <Alert severity="warning">The password is not valid!</Alert>
                 )}
+                </div>
 
                 <div className="form-group">
-                <button className="fluid ui button blue">Submit</button>
+                    <Button className="fluid ui button blue" onClick={()=>handleRegister()} >Submit</Button>
                 </div>
               </div>
             )}

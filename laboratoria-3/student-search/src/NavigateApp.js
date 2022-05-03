@@ -9,19 +9,30 @@ import StudentAdd from './pages/add-student';
 import Info from './pages/info';
 import Login from "./pages/login";
 import Register from "./pages/register";
-import { InformationGroupsContext } from './data/informationGroupsContext';
-import { useContext } from "react";
+
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import WithRouter from "./pages/withRouter";
-
+import axios from "axios";
   
 function NavigateApp() {
-  const [groups, setGroups] = useContext(InformationGroupsContext);
+
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/data/groups.json")
+      .then((response) => {
+        setGroups(response.data);
+      });
+  }, []);
 
     return (
       <>
+      <div>
+      <App />
         <Routes>
-          <Route path="/" element={<App />}>
+          <Route path="/">
               <Route
               index
               element={<Info/>}
@@ -50,7 +61,7 @@ function NavigateApp() {
               />
           </Route>
         </Routes>
-
+      </div>
     </>
     );
   }

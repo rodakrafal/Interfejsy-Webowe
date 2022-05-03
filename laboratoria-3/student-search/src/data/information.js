@@ -1,9 +1,9 @@
 import React, { useState, createContext, useEffect } from "react";
 import axios from "axios";
 
-export const ListOfStudentsContext = createContext();
+export const StudentsContext = createContext();
 
-export const ListOfStudentsProvider = ({ children }) => {
+export const StudentsProvider = ({ children }) => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -15,16 +15,16 @@ export const ListOfStudentsProvider = ({ children }) => {
   }, []);
 
   return (
-    <ListOfStudentsContext.Provider value={{ students, setStudents }}>
+    <StudentsContext.Provider value={{ students, setStudents }}>
       {children}
-    </ListOfStudentsContext.Provider>
+    </StudentsContext.Provider>
   );
 };
 
-export const ListOfGroupsContext = createContext();
+export const GroupsContext = createContext();
 
-export const ListOfGroupsProvider = ({ children }) => {
-  const [groups, setGroups] = useState();
+export const GroupsProvider = ({ children }) => {
+  const [groups, setGroups] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:3000/data/groups.json").then((response) => {
@@ -33,8 +33,8 @@ export const ListOfGroupsProvider = ({ children }) => {
   }, []);
 
   return (
-    <ListOfGroupsContext.Provider value={{ groups, setGroups }}>
+    <GroupsContext.Provider value={{ groups, setGroups }}>
       {children}
-    </ListOfGroupsContext.Provider>
+    </GroupsContext.Provider>
   );
 };

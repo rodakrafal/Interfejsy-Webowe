@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ListOfStudentsContext } from "../data/information";
+import { StudentsContext } from "../data/information";
 
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -18,7 +18,7 @@ import Divider from "@mui/material/Divider";
 import SendIcon from "@mui/icons-material/Send";
 
 const Students = () => {
-  const { students, setStudents } = useContext(ListOfStudentsContext);
+  const { students, setStudents } = useContext(StudentsContext);
 
   useEffect(() => {
     setStudents(
@@ -33,13 +33,98 @@ const Students = () => {
     );
   }, []);
 
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState(1);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
   const handleChange = (event) => {
     setCategory(event.target.value);
   };
+
+  const filterListStudents = students
+    .filter((student) => {
+      if (!search) return true;
+      let studentName = student.name.toLowerCase().split(" ");
+      let studentTags = student.tags;
+      let studentSubjects = student.subjects;
+      let studentDescription = student.description
+        .toLowerCase()
+        .split(" ");
+        let studentSubjectsArray = [];
+        studentSubjects.forEach((subject) => {
+          subject.split(" ").forEach((word) => {
+            studentSubjectsArray.push(word.toLowerCase());
+          });
+        });
+      if (category === 1) {
+        let names = search.split(" ");
+        if (names === undefined) {
+          names = null;
+        }
+        if (
+          names === null
+            ? true
+            : names.every((item) =>
+                studentName.some((name) =>
+                  name.includes(item.toLowerCase())
+                )
+              )
+        ) {
+          return student.name;
+        }
+      }
+      if (category === 2) {
+        let tags = search.split(" ");
+        if (tags === undefined) {
+          tags = null;
+        }
+        if (
+          tags === null
+            ? true
+            : tags.every((item) =>
+                studentTags.some((name) =>
+                  name.includes(item.toLowerCase())
+                )
+              )
+        ) {
+          return student.name;
+        }
+      }
+      if (category === 3) {
+        let desc = search.split(" ");
+        if (desc === undefined) {
+          desc = null;
+        }
+        if (
+          desc === null
+            ? true
+            : desc.every((item) =>
+                studentDescription.some((name) =>
+                  name.includes(item.toLowerCase())
+                )
+              )
+        ) {
+          return student.name;
+        }
+      }
+      if (category === 4) {
+        let sub = search.split(" ");
+        if (sub === undefined) {
+          sub = null;
+        }
+        if (
+          sub === null
+            ? true
+            : sub.every((item) =>
+              studentSubjectsArray.some((name) =>
+                  name.includes(item.toLowerCase())
+                )
+              )
+        ) {
+          return student.name;
+        }
+      }
+    })
 
   return (
     <>
@@ -49,8 +134,7 @@ const Students = () => {
               label="Enter search criteria"
               variant="standard"
               onChange={(event) => {
-                let filter = event.target.value;
-                setSearch(filter);
+                setSearch(event.target.value);
               }}
             />
             <FormControl variant="standard" sx={{ m: 1, minWidth: 110 }}>
@@ -61,7 +145,6 @@ const Students = () => {
                 onChange={handleChange}
                 defaultValue={0}
               >
-                <MenuItem value={0}>All</MenuItem>
                 <MenuItem value={1}>Name</MenuItem>
                 <MenuItem value={2}>Tags</MenuItem>
                 <MenuItem value={3}>Description</MenuItem>
@@ -79,164 +162,13 @@ const Students = () => {
             </Button>
           </div>
         <div className="body-content">
-          {students
-            .filter((student) => {
-              if (!search) return true;
-              let studentName = student.name.toLowerCase().split(" ");
-              let studentTags = student.tags;
-              let studentSubjects = student.subjects;
-              let studentDescription = student.description
-                .toLowerCase()
-                .split(" ");
-                let studentSubjectsArray = [];
-                studentSubjects.forEach((subject) => {
-                  subject.split(" ").forEach((word) => {
-                    studentSubjectsArray.push(word.toLowerCase());
-                  });
-                });
-              if (category === 0) {
-                let regexDescription = /\{(.*?)\}/g;
-                let regexTags = /\[(.*?)\]/g;
-                let regexSubject = /\((.*?)\)/g;
-                let regexName = /\"(.*?)\"/g;
-                let filteredDescription = regexDescription.exec(search);
-                let filteredTags = regexTags.exec(search);
-                let filteredSubject = regexSubject.exec(search);
-                let filteredName = regexName.exec(search);
-                let desc, tags, subjects, name;
-
-                if (filteredDescription) {
-                  desc = filteredDescription[1].split(" ");
-                }
-                if (filteredTags) {
-                  tags = filteredTags[1].split(" ");
-                }
-                if (filteredSubject) {
-                  subjects = filteredSubject[1].split(" ");
-                }
-                if (filteredName) {
-                  name = filteredName[1].split(" ");
-                }
-
-                if (desc === undefined) {
-                  desc = null;
-                }
-                if (tags === undefined) {
-                  tags = null;
-                }
-                if (subjects === undefined) {
-                  subjects = null;
-                }
-                if (name === undefined) {
-                  name = null;
-                }
-
-                if (
-                  (desc === null
-                    ? true
-                    : desc.every((item) =>
-                        studentDescription.some((description) =>
-                          description.includes(item.toLowerCase())
-                        )
-                      )) &&
-                  (tags === null
-                    ? true
-                    : tags.every((item) =>
-                        studentTags.some((tag) =>
-                          tag.includes(item.toLowerCase())
-                        )
-                      )) &&
-                  (subjects === null
-                    ? true
-                    : subjects.every((item) =>
-                        studentSubjects.some((subject) =>
-                          subject.includes(item.toLowerCase())
-                        )
-                      )) &&
-                  (name === null
-                    ? true
-                    : name.every((item) =>
-                        studentName.some((name) =>
-                          name.includes(item.toLowerCase())
-                        )
-                      ))
-                ) {
-                  return student.name;
-                }
-              }
-              if (category === 1) {
-                let names = search.split(" ");
-                if (names === undefined) {
-                  names = null;
-                }
-                if (
-                  names === null
-                    ? true
-                    : names.every((item) =>
-                        studentName.some((name) =>
-                          name.includes(item.toLowerCase())
-                        )
-                      )
-                ) {
-                  return student.name;
-                }
-              }
-              if (category === 2) {
-                let tags = search.split(" ");
-                if (tags === undefined) {
-                  tags = null;
-                }
-                if (
-                  tags === null
-                    ? true
-                    : tags.every((item) =>
-                        studentTags.some((name) =>
-                          name.includes(item.toLowerCase())
-                        )
-                      )
-                ) {
-                  return student.name;
-                }
-              }
-              if (category === 3) {
-                let desc = search.split(" ");
-                if (desc === undefined) {
-                  desc = null;
-                }
-                if (
-                  desc === null
-                    ? true
-                    : desc.every((item) =>
-                        studentDescription.some((name) =>
-                          name.includes(item.toLowerCase())
-                        )
-                      )
-                ) {
-                  return student.name;
-                }
-              }
-              if (category === 4) {
-                let sub = search.split(" ");
-                if (sub === undefined) {
-                  sub = null;
-                }
-                if (
-                  sub === null
-                    ? true
-                    : sub.every((item) =>
-                      studentSubjectsArray.some((name) =>
-                          name.includes(item.toLowerCase())
-                        )
-                      )
-                ) {
-                  return student.name;
-                }
-              }
-            })
-            .map((student) => (
+          
+          {
+          filterListStudents.map((student, index) => (
+            // <div key={index}>
               <Accordion
                 sx={{ minWidth: "75%", maxWidth: "75%" }}
-                key={student.id}
+                key={index}
               >
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <h1>{student.name}</h1>
@@ -244,18 +176,20 @@ const Students = () => {
                 <AccordionDetails>
                   <Divider>TAGS</Divider>
                   <Typography component={"ul"}>
-                    {student.tags.map((item) => (
-                      <li>{item}</li>
+                    {student.tags.map((item, index) => (
+                      <li key={index}>{item}</li>
                     ))}
                   </Typography>
                   <Divider>SUBJECTS</Divider>
                   <ul>
-                    {student.subjects.map((item) => (
-                      <li>{item}</li>
+                    {student.subjects.map((item, index) => (
+                      <li key={index}>{item}</li>
                     ))}
                   </ul>
                   <Divider>DESCRIPTION</Divider>
                   <span>{student.description}</span>
+                  <Divider>PICTURE</Divider>
+                  <img src={student.image} alt="student" />
                   <div className="center-button">
                     <Button
                       key={student.id}
@@ -269,7 +203,9 @@ const Students = () => {
                     </Button>
                   </div>
                 </AccordionDetails>
-              </Accordion>
+              </Accordion> 
+
+            // </div>
             ))}
         </div>
       </div>
@@ -278,3 +214,5 @@ const Students = () => {
 }
 
 export default Students;
+
+             

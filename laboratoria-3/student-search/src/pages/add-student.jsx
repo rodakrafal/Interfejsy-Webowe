@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import { InformationStudentsContext } from "../data/informationStudentsContext";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -8,7 +8,17 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function StudentAdd() {
-  const [students, setStudents] = useContext(InformationStudentsContext);
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/data/students.json")
+      .then((response) => {
+        setStudents(response.data);
+      });
+  }, []);
+
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
@@ -68,7 +78,18 @@ export default function StudentAdd() {
         number: prevStudents.length + 1,
       },
     ]);
-    navigate(`/students`);
+    const userData = {
+        name: name,
+        description: description,
+        tags: tags.split(","),
+        subjects: subjects.split(","),
+        email: email,
+        number: 10,
+    };
+    axios.post("http://localhost:3000/data/students.json", userData).then((response) => {
+      console.log(response.status);
+      console.log(response.data.token);
+    });
   };
 
   return (

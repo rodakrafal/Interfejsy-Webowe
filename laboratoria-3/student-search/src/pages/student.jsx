@@ -1,13 +1,21 @@
 import { useParams } from "react-router-dom";
-import { InformationStudentsContext } from "../data/informationStudentsContext";
+import { InformationStudentsContext } from "../data/information.js";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
-
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Student() {
     let params = useParams();
     
-    const [students, setStudents] = useContext(InformationStudentsContext);
+    const [students, setStudents ] = useState([]);
+
+    useEffect(() => {
+      axios
+        .get("http://localhost:3000/data/students.json")
+        .then((response) => {
+          setStudents(response.data);
+        });
+    }, []);
 
     let student = students.find((student) => student.number === parseInt(params.studentId, 10));
 
