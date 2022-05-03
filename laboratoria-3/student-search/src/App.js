@@ -1,4 +1,3 @@
-import "./App.css";
 import "./styles/main-style.css";
 
 import { Outlet, useNavigate } from "react-router-dom";

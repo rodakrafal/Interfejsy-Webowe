@@ -1,0 +1,79 @@
+[
+    {
+      "name": "Normalna grupa",
+      "number": 1,
+      "description": "Testowy tekst poszukiwania grupy",
+      "tags": ["python", "backend", "flask"],
+      "subjects": ["Inżynieria obrazów", "Projektowanie i programowanie gier"],
+      "people": [
+        {
+          "name": "Jan Kowalski",
+          "email": "jankowalski@gmail.com"
+        },
+        {
+          "name": "Adam Kowalski",
+          "email": "addaaam@test.com"
+        },
+        {
+          "name": "Magda Magda",
+          "email": "kaban@urw.not.pwr.pl"
+        }
+      ]
+    },
+    {
+      "name": "Legendy",
+      "number": 2,
+      "description":
+        "Zaskakująco inteligentna grupa w której na pewno nie ma prowadzących",
+      "tags": ["backend", "devOps", "flask", "SI"],
+      "subjects": ["SI", "Projektowanie i programowanie sieci neuronowych"],
+      "people": [
+        {
+          "name": "John Biernat",
+          "email": "ak2@nieDlaCiebieStudencie.com"
+        },
+        {
+          "name": "Parek Miasecki",
+          "email": "cppIsTheBest@real.com"
+        },
+        {
+          "name": "Cariusz Daban",
+          "email": "kaban@urw.not.pwr.pl"
+        },
+        {
+          "name": "Piter Cruasant",
+          "email": "help@urw.pl"
+        },
+        {
+          "name": "Ted Tomczak",
+          "email": "kartaGraficznahahaBrrr@nienawidzeAK.pl"
+        }
+      ]
+    },
+    {
+      "name": "VHDL grupa 2",
+      "number": 3,
+      "description": "Nie mam pojęcia co robimy, ale chyba idzie to dobrze?",
+      "tags": ["pomocy", "tag", "student"],
+      "subjects": ["Flanki", "PIWo"],
+      "people": [
+        {
+          "name": "Pan Student",
+          "email": "student1@gmail.com"
+        },
+        {
+          "name": "Pan Student tylko że 2",
+          "email": "student2@gmail.com"
+        },
+        {
+          "name": "Nie dziekan",
+          "email": "naPrawde@jaNieKłamie.com"
+        },
+        {
+          "name": "Rektor",
+          "email": "rektor@prawdziwyRektor.eu"
+        }
+      ]
+    }
+]
+
