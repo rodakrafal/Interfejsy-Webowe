@@ -31,7 +31,6 @@ export default function Students() {
   return (
     <>
       <div className="body-container">
-        <nav>
           <div className="body-header">
             <TextField
               label="Enter search criteria"
@@ -66,7 +65,6 @@ export default function Students() {
               Student
             </Button>
           </div>
-        </nav>
         <div className="body-content">
           {students
             .filter((student) => {
