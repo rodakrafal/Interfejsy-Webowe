@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { StudentsContext } from "../data/information";
+import axios from "axios";
 
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -19,19 +20,31 @@ import SendIcon from "@mui/icons-material/Send";
 
 const Students = () => {
   const { students, setStudents } = useContext(StudentsContext);
+  const [ change, setChange] = useState(false);
 
   useEffect(() => {
     setStudents(
       students.map((elem) => {
         if(elem.image === ""){
-          fetch("https://picsum.photos/210/300").then((img) => {
+          fetch("https://picsum.photos/210/300")
+          .then(res => {
+            return res;
+          })
+          .then((img) => {
             elem.image = img.url;
+            console.log(img.url);
+            // this doesn't work because of the async nature of the fetch - the image is not yet available
+            // if(students.length - 1 === elem.number){
+              //   setChange(!change);
+              // }
+            // not a great way to do this but works
+            setChange(!change);
           });
         }
         return elem;
       })
     );
-  }, []);
+  }, [change]);
 
   const [category, setCategory] = useState(1);
   const navigate = useNavigate();
@@ -196,7 +209,7 @@ const Students = () => {
                       variant="contained"
                       endIcon={<SendIcon />}
                       onClick={() => {
-                        navigate(`/students/${student.number}/student-contact`);
+                        navigate(`/students/student-contact`, {state: student});
                       }}
                     >
                       Contact!

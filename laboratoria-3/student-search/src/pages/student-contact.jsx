@@ -1,13 +1,11 @@
-import { useParams, useNavigate } from "react-router-dom";
-import React, { useEffect, useState, useContext } from 'react';
-import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from 'react';
+import Student from "../components/Student";
 
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, Button, Typography, Modal, TextareaAutosize } from '@mui/material';
+
 import EmailIcon from '@mui/icons-material/Email';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const style = {
     position: 'absolute',
@@ -15,32 +13,26 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
+    backgroundColor: '#fff',
     p: 4,
 };
 
-export default function StudentContact() {
-    let params = useParams();
-    const [students, setStudents] = useState([]);
-    const [student, setStudent] = useState(null);
-
-    useEffect(() => {
-        axios
-          .get("http://localhost:3000/data/students.json")
-          .then((response) => {
-            setStudents(response.data);
-          });
-        student = students.find((student) => student.number === parseInt(params.studentId, 10));
-      }, []);
-
-    const [open, setOpen] = useState(false);
-    const navigate = useNavigate();
+ const StudentContact = () => {
+     
+     const [open, setOpen] = useState(false);
+     const navigate = useNavigate();
+     const location = useLocation();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     
+    const refAreaInput = useRef(null);
+    useEffect(() => {
+      refAreaInput.current?.focus();
+    });
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setOpen(false);
@@ -51,23 +43,41 @@ export default function StudentContact() {
     return (
         <main>
             <div className="information-container">
-                <h1 style={{ "font-size": "24px" }}>{student.name}</h1>
+                <h1 style={{ "fontSize": "24px" }}>{location.state.name}</h1>
              </div>
             <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            >
-            <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                Successfully sent mail to {student.name}!
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis sunt, ea beatae provident ex nulla illum maiores ipsam facere dolorem pariatur unde distinctio consequatur. Impedit neque similique animi totam deserunt.
-                </Typography>
-            </Box>
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    Successfully sent mail to {location.state.name}!
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis sunt, ea beatae provident ex nulla illum maiores ipsam facere dolorem pariatur unde distinctio consequatur. Impedit neque similique animi totam deserunt.
+                    </Typography>
+                </Box>
             </Modal>
+
+            <Student 
+                description={location.state.description} 
+                email={location.state.email}
+                image={location.state.image}
+                tags={location.state.tags}
+                subjects={location.state.subjects}
+            />
+
+            <TextareaAutosize
+                ref={refAreaInput}
+                aria-label="text-area-input"
+                minRows={3}
+                maxRows={5}
+                placeholder="Enter a message here!"
+                style={{ maxWidth: 600, minWidth: 400, minHeight: 200, maxHeight: 400, margin: "auto" }}
+            />
+
             <div className="contact-buttons">
                 <Button
                 variant="contained"
@@ -90,3 +100,5 @@ export default function StudentContact() {
         </main>
       );
 }
+
+export default StudentContact;

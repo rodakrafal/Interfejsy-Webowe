@@ -1,95 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { StudentsContext } from "../data/information";
+import { Alert, Button, TextField } from "@mui/material";
 
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function StudentAdd() {
-  const [students, setStudents] = useState([]);
+  const { students, setStudents } = useContext(StudentsContext);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/data/students.json")
-      .then((response) => {
-        setStudents(response.data);
-      });
-  }, []);
+  const [values, setValues] = useState({
+    name: "",
+    description: "",
+    tags: "",
+    subjects: "",
+    email: "",
+  });
 
+  const [message, setMessage] = useState("");
+  const [successful, setSuccessful] = useState(false);
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState("");
-  const [subjects, setSubjects] = useState("");
-  const [email, setEmail] = useState("");
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const navigate = useNavigate();
 
-  const updateName = (event) => {
-    setName(event.target.value);
-  };
-  const updateDescription = (event) => {
-    setDescription(event.target.value);
-  };
-  const updateTags = (event) => {
-    setTags(event.target.value);
-  };
-  const updateSubjects = (event) => {
-    setSubjects(event.target.value);
-  };
-  const updateEmail = (event) => {
-    setEmail(event.target.value);
-  };
-
   const addStudent = (event) => {
     event.preventDefault();
-    const student = students.find((student) => student.name === name);
+    setMessage("");
+    setSuccessful(false);
+    const student = students.find((student) => student.name === values.name);
     if (student) {
-      alert("The student is already in the list");
+      setMessage("Student already exists");
       return;
     }
-    const emailStudent = students.find((student) => student.email === email);
+    const emailStudent = students.find((student) => student.email === values.email);
     if (emailStudent) {
-      alert("The email is already in the list");
+      setMessage("The email is already in the list");
+      setSuccessful(false);
       return;
     }
 
     if (
-      name === "" ||
-      email === "" ||
-      tags === "" ||
-      subjects === "" ||
-      description === ""
+      values.name === "" ||
+      values.email === "" ||
+      values.tags === "" ||
+      values.subjects === "" ||
+      values.description === ""
     ) {
-      alert("You must fill all the fields");
+      setMessage("Please fill all the fields");
+      setSuccessful(false);
       return;
     }
 
     setStudents((prevStudents) => [
       ...prevStudents,
       {
-        name: name,
-        description: description,
-        tags: tags.split(","),
-        subjects: subjects.split(","),
-        email: email,
+        name: values.name,
+        description: values.description,
+        tags: values.tags.split(","),
+        subjects: values.subjects.split(","),
+        email: values.email,
         number: prevStudents.length + 1,
+        image: "",
       },
     ]);
-    const userData = {
-        name: name,
-        description: description,
-        tags: tags.split(","),
-        subjects: subjects.split(","),
-        email: email,
-        number: 10,
-    };
-    axios.post("http://localhost:3000/data/students.json", userData).then((response) => {
-      console.log(response.status);
-      console.log(response.data.token);
-    });
+    setMessage("Student added successfully");
+    setSuccessful(true);
   };
 
   return (
@@ -97,62 +75,81 @@ export default function StudentAdd() {
       <div className="information-container">
         <h1 style={{ "fontSize": "24px" }}>Add Student</h1>
       </div>
-
-      <TextField
-        sx={{ minWidth: "50%", maxWidth: "50%" }}
-        required
-        label="Name"
-        variant="standard"
-        onChange={updateName}
-      />
-      <TextField
-        sx={{ minWidth: "50%", maxWidth: "50%" }}
-        required
-        label="Tags"
-        variant="standard"
-        onChange={updateTags}
-      />
-      <TextField
-        sx={{ minWidth: "50%", maxWidth: "50%" }}
-        required
-        label="Subjects"
-        variant="standard"
-        onChange={updateSubjects}
-      />
-      <TextField
-        sx={{ minWidth: "50%", maxWidth: "50%" }}
-        required
-        label="Description"
-        variant="standard"
-        onChange={updateDescription}
-      />
-      <TextField
-        sx={{ minWidth: "50%", maxWidth: "50%" }}
-        required
-        label="Email"
-        variant="standard"
-        onChange={updateEmail}
-      />
+      {/* {!successful && (
+        <div style={{display: "flex", flexDirection: "column", width: "100%"}}> */}
+          <TextField
+            sx={{ minWidth: "50%", maxWidth: "50%" }}
+            required
+            label="Name"
+            variant="standard"
+            value={values.name}
+            onChange={handleChange("name")}
+          />
+          <TextField
+            sx={{ minWidth: "50%", maxWidth: "50%" }}
+            required
+            label="Tags"
+            variant="standard"
+            value={values.tags}
+            onChange={handleChange("tags")}
+          />
+          <TextField
+            sx={{ minWidth: "50%", maxWidth: "50%" }}
+            required
+            label="Subjects"
+            variant="standard"
+            value={values.subjects}
+            onChange={handleChange("subjects")}
+          />
+          <TextField
+            sx={{ minWidth: "50%", maxWidth: "50%" }}
+            required
+            label="Description"
+            variant="standard"
+            value={values.description}
+            onChange={handleChange("description")}
+          />
+          <TextField
+            sx={{ minWidth: "50%", maxWidth: "50%" }}
+            required
+            label="Email"
+            variant="standard"
+            value={values.email}
+            onChange={handleChange("email")}
+          />
+        {/* </div>
+      )} */}
+      {message && (
+        <div className="form-group">
+          <Alert
+            severity={
+              successful ? "success" : "error"
+            }
+          >
+            {message}
+          </Alert>
+        </div>
+      )}
       
       <div className="contact-buttons">
-                <Button
-                variant="contained"
-                startIcon={<ArrowBackIcon />}
-                onClick={() => {
-                    navigate(`/students`);
-                }}
-                sx={{   margin: "10px" }}
-                >
-                Go back!
-                </Button>
-                <Button
-                variant="contained"
-                startIcon={<AddBoxIcon />}
-                onClick={addStudent}
-              >
-                Add new Student
-              </Button>
-            </div>         
+          <Button
+          variant="contained"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => {
+              navigate(`/students`);
+          }}
+          sx={{ margin: "10px" }}
+          >
+          Go back!
+          </Button>
+          <Button
+          variant="contained"
+          startIcon={<AddBoxIcon />}
+          onClick={addStudent}
+        >
+          Add new Student
+        </Button>
+      </div>         
     </div>
   );
 }

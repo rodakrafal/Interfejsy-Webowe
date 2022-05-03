@@ -7,13 +7,13 @@ export const StudentsProvider = ({ children }) => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/data/students.json")
-      .then((response) => {
-        setStudents(response.data);
-      });
+    async function fetchData() {
+      const result = await axios.get("http://localhost:3000/data/students.json");
+      setStudents(result.data);
+    }
+    fetchData();
   }, []);
-
+  
   return (
     <StudentsContext.Provider value={{ students, setStudents }}>
       {children}

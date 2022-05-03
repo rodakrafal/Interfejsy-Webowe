@@ -1,6 +1,5 @@
 import App from "./App";
 import Students from "./pages/students";
-import Student from './pages/student';
 import Groups from './pages/groups';
 import Group from './pages/group';
 import StudentContact from './pages/student-contact';
@@ -44,9 +43,8 @@ function NavigateApp() {
               <Route path="add-group" element={<WithRouter groups={groups} />} />
 
               <Route path="students" element={<Students />}>
-              <Route path=":studentId" element={<Student />} />
               </Route>
-              <Route path="students/:studentId/student-contact" element={<StudentContact />} />
+              <Route path="students/student-contact" element={<StudentContact />} />
               <Route path="add-student" element={<StudentAdd />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
