@@ -80,21 +80,21 @@ const style = {
 
             <div className="contact-buttons">
                 <Button
-                variant="contained"
-                startIcon={<ArrowBackIcon />}
-                onClick={() => {
-                    navigate(`/students`);
-                }}
-                sx={{   margin: "10px" }}
+                    variant="contained"
+                    startIcon={<ArrowBackIcon />}
+                    onClick={() => {
+                        navigate(`/students`);
+                    }}
+                    sx={{   margin: "10px" }}
                 >
-                Go back!
+                    Go back!
                 </Button>
                 <Button
-                variant="contained"
-                endIcon={<EmailIcon />}
-                onClick={handleOpen}
+                    variant="contained"
+                    endIcon={<EmailIcon />}
+                    onClick={handleOpen}
                 >
-                Send Email!
+                    Send Email!
                 </Button>
             </div>         
         </main>

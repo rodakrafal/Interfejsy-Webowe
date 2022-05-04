@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { StudentsContext } from "../data/information";
+import { StudentsContext } from "../context/information";
 import axios from "axios";
 
 import Button from "@mui/material/Button";

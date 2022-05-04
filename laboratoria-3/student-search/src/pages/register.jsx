@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { UsersContext } from "../context/information";
 import { isEmail } from "validator";
 
 import {
@@ -40,10 +41,10 @@ const validPassword = (value) => {
 };
 
 function Register() {
-  // const navigate = useNavigate();
+  const { users, dispatch } = useContext(UsersContext);
 
   const [values, setValues] = useState({
-    username: "name",
+    username: "login",
     email: "email@s.com",
     password: "password",
     showPassword: true,
@@ -95,8 +96,18 @@ function Register() {
     setSuccessful(false);
 
     if (emailError === false && nameError === false && passwordError === false) {
+      if(users.find(user => user.email === values.email)) {
+        setMessage("Email already exists");
+      } else {
         setMessage("bla bla bla udało sie gratuluje");
         setSuccessful(true);
+        dispatch({ type: 'REGISTER_USER', user: { 
+          email: values.email, 
+          password: values.password,
+          login: values.username
+        }});
+      }
+
     } else {
         setMessage("bla bla bla nie udało sie gratuluje");
         setSuccessful(false);
@@ -119,7 +130,7 @@ function Register() {
                 <TextField
                     required={true}
                     id="outlined-required-name"
-                    label="Name"
+                    label="Login"
                     value={values.username}
                     onChange={handleChange("username")}
                     error={nameError}

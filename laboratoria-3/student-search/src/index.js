@@ -9,7 +9,8 @@ import lightTheme from "./styles/Theme/LightTheme";
 import {
   GroupsProvider,
   StudentsProvider,
-} from "./data/information";
+  UsersProvider,
+} from "./context/information";
 
 
 const rootElement = document.getElementById("root");
@@ -18,11 +19,13 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={lightTheme}>
+        <UsersProvider>
         <StudentsProvider>
         <GroupsProvider>
           <NavigateApp />
         </GroupsProvider>
         </StudentsProvider>
+        </UsersProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,

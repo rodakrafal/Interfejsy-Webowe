@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { StudentsContext } from "../data/information";
+import { StudentsContext } from "../context/information";
 import { Alert, Button, TextField } from "@mui/material";
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -33,6 +33,7 @@ export default function StudentAdd() {
     const student = students.find((student) => student.name === values.name);
     if (student) {
       setMessage("Student already exists");
+      setSuccessful(false);
       return;
     }
     const emailStudent = students.find((student) => student.email === values.email);

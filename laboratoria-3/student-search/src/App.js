@@ -1,14 +1,15 @@
 import "./styles/main-style.css";
 
-import { Outlet, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { UsersContext } from "./context/information";
+
 import { Button, Toolbar, Box, AppBar, Badge, IconButton } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 function App() {
-
   const [isLogged, setIsLogged] = useState(false);
-
+  const { dispatch } = useContext(UsersContext);
   const navigate = useNavigate();
 
   return (

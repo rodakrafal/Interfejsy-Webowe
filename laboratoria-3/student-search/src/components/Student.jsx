@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { StudentsContext } from "../data/information.js";
+import { StudentsContext } from "../context/information.js";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 
