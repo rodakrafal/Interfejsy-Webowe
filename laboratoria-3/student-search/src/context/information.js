@@ -15,6 +15,16 @@ export const StudentsProvider = (props) => {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    students.map(student => {
+      if (student.img === ""){
+        student.img = "https://picsum.photos/210/300";
+      }
+      return student;
+    })
+    console.log(students);
+  }, [students]);
   
   return (
     <StudentsContext.Provider value={{ students, setStudents }}>
@@ -43,55 +53,42 @@ export const GroupsProvider = (props) => {
   );
 };
 export const UsersContext = createContext();
-export const LoggedUser = createContext();
+export const LoggedUserContext = createContext();
 
 export const UsersProvider = (props) => {
 
-  const loggedUserReducer = (state, action) => {
-    switch (action.type) {
-      case 'LOGIN_USER':
-        return  {
-          email: action.user.email, 
-          password: action.user.password, 
-          login: action.user.login,
-          id: uuidv4()
-        }
-    case 'LOGOUT_USER':
-          return state.find(user => user.id === action.id);
-      default:
-        return state;
-    }
-  }
-
-  const [loggedUser, dispatchLoggedUser] = useReducer(loggedUserReducer, {}, () => {
-    const localData = localStorage.getItem('user');
-    return localData ? JSON.parse(localData) : {id: -1};
-  });
-
+  const [loggedUser, setLoggedUser] = useState(null);
   const [users, dispatch] = useReducer(userReducer, []);
 
-  async function fetchData() {
-    const result = await axios.get("http://localhost:3000/data/users.json")
-    return await result.data;
-  }
-  
   useEffect(() => {
     async function fetchData() {
-      const result = await axios.get("http://localhost:3000/data/students.json");
+      const result = await axios.get("http://localhost:3000/data/users.json");
       dispatch({type: 'LOAD_USER', users: result.data});
     }
     fetchData();
+    
   }, []);
+  
+  const login = (email, password) => {
+    console.log(users)
+    const loginUser = users.find(user => user.email === email && user.password === password);
+    if(loginUser) {
+      setLoggedUser(loginUser);
+      return true;
+    } else {
+      return false;
+    }
+  };
 
-  useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(loggedUser));
-  }, [loggedUser]);
+  const logout = () => {
+    setLoggedUser(null);
+  };
 
   return (
     <UsersContext.Provider value={{ users, dispatch }}>
-      <LoggedUser.Provider value={{ loggedUser, dispatchLoggedUser }}>
+      <LoggedUserContext.Provider value={{ loggedUser, login, logout }}>
         {props.children}
-      </LoggedUser.Provider>
+      </LoggedUserContext.Provider>
     </UsersContext.Provider>
   );
 };

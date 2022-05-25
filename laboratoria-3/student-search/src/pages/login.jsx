@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Password from "../components/Password";
+import React, { useEffect, useState, useContext } from "react";
+import { LoggedUserContext } from "../context/information";
 import { isEmail } from "validator";
 
 import {
@@ -34,7 +34,7 @@ const validPassword = (value) => {
 
 function Login() {
     
-    // const navigate = useNavigate();
+    const { loggedUser, login } = useContext(LoggedUserContext);
 
     const [values, setValues] = useState({
       email: "email@s.com",
@@ -81,8 +81,13 @@ function Login() {
       setSuccessful(false);
   
       if (emailError === false && passwordError === false) {
+        if(login(values.email, values.password)){
           setMessage("bla bla bla udało sie gratuluje");
           setSuccessful(true); 
+        } else {
+          setMessage("bla bla bla nie udało sie gratuluje");
+          setSuccessful(false);
+        }   
       } else {
           setMessage("bla bla bla nie udało sie gratuluje");
           setSuccessful(false);

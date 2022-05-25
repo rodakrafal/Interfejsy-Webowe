@@ -96,8 +96,8 @@ function Register() {
     setSuccessful(false);
 
     if (emailError === false && nameError === false && passwordError === false) {
-      if(users.find(user => user.email === values.email)) {
-        setMessage("Email already exists");
+      if(users.find(user => user.email === values.email || user.login === values.username)) {
+        setMessage("User already exists");
       } else {
         setMessage("bla bla bla udało sie gratuluje");
         setSuccessful(true);
