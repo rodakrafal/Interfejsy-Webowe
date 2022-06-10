@@ -69,14 +69,9 @@ export const UsersProvider = (props) => {
     
   }, []);
   
-  const login = (email, password) => {
-    console.log(users)
-    const loginUser = users.find(user => user.email === email && user.password === password);
-    if(loginUser) {
-      setLoggedUser(loginUser);
-      return true;
-    } else {
-      return false;
+  const login = (user) => {
+    if(user !== null){
+      setLoggedUser(user);
     }
   };
 

@@ -1,6 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { LoggedUserContext } from "../context/information";
 import { isEmail } from "validator";
+import { auth } from "../firebase/init";
+import { useAuthState } from "react-firebase-hooks/auth";
+import {
+  logInWithGoogle,
+  logInWithGithub,
+} from "../firebase/users";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import {
   TextField,
@@ -10,7 +17,7 @@ import {
   InputAdornment,
   FormControl,
   Alert,
-  Button
+  Button,
 } from "@mui/material";
 
 import Visibility from "@mui/icons-material/Visibility";
@@ -33,80 +40,118 @@ const validPassword = (value) => {
 };
 
 function Login() {
-    
-    const { loggedUser, login } = useContext(LoggedUserContext);
+  const { loggedUser, login } = useContext(LoggedUserContext);
 
-    const [values, setValues] = useState({
-      email: "email@s.com",
-      password: "password",
-      showPassword: true,
+  const [values, setValues] = useState({
+    email: "email@s.com",
+    password: "password",
+    showPassword: true,
+  });
+
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
+  const [user, loading, error] = useAuthState(auth);
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
     });
+  };
 
-    const [successful, setSuccessful] = useState(false);
-    const [message, setMessage] = useState("");
-  
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
-    const handleChange = (prop) => (event) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
-  
-    const handleClickShowPassword = () => {
-      setValues({
-        ...values,
-        showPassword: !values.showPassword,
-      });
-    };
-  
-    const handleMouseDownPassword = (event) => {
-      event.preventDefault();
-    };
-  
-    useEffect(() => {
-      if (validPassword(values.password) === false) {
-        setPasswordError(true);
-      } else setPasswordError(false);
-    }, [values.password]);
-  
-    useEffect(() => {
-      if (validEmail(values.email) === false) {
-        setEmailError(true);
-      } else setEmailError(false);
-    }, [values.email]);
-  
-    const handleLogin = () => {
-  
-      setMessage("");
+  useEffect(() => {
+    if (loggedUser === null) {
       setSuccessful(false);
-  
-      if (emailError === false && passwordError === false) {
-        if(login(values.email, values.password)){
+      setMessage("");
+    }
+  }, [loggedUser]);
+
+  useEffect(() => {
+    if (validPassword(values.password) === false) {
+      setPasswordError(true);
+    } else setPasswordError(false);
+  }, [values.password]);
+
+  useEffect(() => {
+    if (validEmail(values.email) === false) {
+      setEmailError(true);
+    } else setEmailError(false);
+  }, [values.email]);
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+    if (user) {
+      // setMessage("bla bla bla udało sie gratuluje");
+      // setSuccessful(true);
+    }
+    if (error) {
+      setMessage(`bla bla bla nie udało sie gratuluje - error: ${error}`);
+      setSuccessful(false);
+    }
+  }, [user, loading]);
+
+  const handleLogin = () => {
+    setMessage("");
+    setSuccessful(false);
+
+    if (emailError === false && passwordError === false) {
+      signInWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user.email, user.password);
           setMessage("bla bla bla udało sie gratuluje");
-          setSuccessful(true); 
-        } else {
-          setMessage("bla bla bla nie udało sie gratuluje");
-          setSuccessful(false);
-        }   
-      } else {
-          setMessage("bla bla bla nie udało sie gratuluje");
-          setSuccessful(false);
-      }
-    };
-    return (
-      <>
-        <div className="body-container">
-          <div className="paper">
+          setSuccessful(true);
+          login(user);
+        })
+        .catch((error) => {
+          switch(error.code) {
+            case "auth/user-not-found":
+              setMessage("User not found");
+              setSuccessful(false);
+              break;
+            case "auth/wrong-password":
+              setMessage("Wrong password");
+              setSuccessful(false);
+              break;
+            default:
+              setMessage(error.message);
+              setSuccessful(false);
+          }
+        });
+    } else {
+      setMessage("bla bla bla nie udało sie gratuluje");
+      setSuccessful(false);
+    }
+  };
+
+  return (
+    <>
+      <div className="body-container">
+        <div className="paper">
           {!successful && (
             <div>
               <div className="form-group">
                 <TextField
-                    required={true}
-                    id="outlined-required-email"
-                    label="Email"
-                    value={values.email}
-                    onChange={handleChange("email")}
-                    error={emailError}
+                  required={true}
+                  id="outlined-required-email"
+                  label="Email"
+                  value={values.email}
+                  onChange={handleChange("email")}
+                  error={emailError}
                 />
               </div>
 
@@ -141,35 +186,37 @@ function Login() {
                     label="Password"
                   />
                 </FormControl>
-                </div>
+              </div>
 
-                <div className="form-group">
+              <div className="form-group">
                 {passwordError && (
                   <Alert severity="warning">The password is not valid!</Alert>
                 )}
-                </div>
-
-                <div className="form-group">
-                    <Button className="fluid ui button blue" onClick={()=>handleLogin()} >Submit</Button>
-                </div>
-                </div>
-            )}
-                {message && (
-              <div className="form-group">
-                <Alert
-                  severity={
-                    successful ? "success" : "error"
-                  }
-                >
-                  {message}
-                </Alert>
               </div>
-            )}
-          </div>
+
+              <div className="form-group">
+                <Button
+                  className="fluid ui button blue"
+                  onClick={() => handleLogin()}
+                >
+                  Submit
+                </Button>
+              </div>
+              <Button onClick={logInWithGoogle}>Login with Google</Button>
+              <Button onClick={logInWithGithub}>Login with Github</Button>
+            </div>
+          )}
+          {message && (
+            <div className="form-group">
+              <Alert severity={successful ? "success" : "error"}>
+                {message}
+              </Alert>
+            </div>
+          )}
         </div>
-      </>
-    );
-  }
-  
-  export default Login;
-  
+      </div>
+    </>
+  );
+}
+
+export default Login;

@@ -1,14 +1,15 @@
 import "./styles/main-style.css";
 
+import { LoggedUserContext } from "./context/information";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { UsersContext } from "./context/information";
 
 import { Button, Toolbar, Box, AppBar, Badge, IconButton } from "@mui/material";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function App() {
-  const [isLogged, setIsLogged] = useState(false);
+  const { loggedUser, logout } = useContext(LoggedUserContext);
   const { dispatch } = useContext(UsersContext);
   const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ function App() {
                 <h3>Search For Help!</h3>
               </button>
             </Box>
-            <Box sx={{padding: "0px 18px" }}>
+            <Box sx={{ padding: "0px 18px" }}>
               <Button
                 color="inherit"
                 onClick={() => {
@@ -45,31 +46,60 @@ function App() {
                 Groups
               </Button>
             </Box>
-            {
-              isLogged ?
-                  <Button color="inherit">Logout</Button>              
-              :
+            {loggedUser !== null ? (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <span
+                  style={{
+                    display: "flex",
+                    maxWidth: "150px",
+                    overflow: "hidden",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 4,
+                  }}
+                >
+                  {loggedUser.email}
+                </span>
+
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    logout();
+                  }}
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
               <div>
-                <Button color="inherit"
+                <Button
+                  color="inherit"
                   onClick={() => {
                     navigate("/login");
                   }}
-                  >Login</Button>
-                <Button color="inherit"
+                >
+                  Login
+                </Button>
+                <Button
+                  color="inherit"
                   onClick={() => {
                     navigate("/register");
                   }}
-                >Register</Button>
+                >
+                  Register
+                </Button>
               </div>
+            )}
 
-            }
-
-            <IconButton size="large" aria-label="students-number" color="inherit">
+            <IconButton
+              size="large"
+              aria-label="students-number"
+              color="inherit"
+            >
               <Badge badgeContent={4} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-          
           </Toolbar>
         </AppBar>
       </Box>
