@@ -4,10 +4,11 @@ import { isEmail } from "validator";
 import { auth } from "../firebase/init";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
-  logInWithGoogle,
-  logInWithGithub,
-} from "../firebase/users";
-import { signInWithEmailAndPassword } from "firebase/auth";
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 
 import {
   TextField,
@@ -90,20 +91,6 @@ function Login() {
     } else setEmailError(false);
   }, [values.email]);
 
-  useEffect(() => {
-    if (loading) {
-      return;
-    }
-    if (user) {
-      // setMessage("bla bla bla udało sie gratuluje");
-      // setSuccessful(true);
-    }
-    if (error) {
-      setMessage(`bla bla bla nie udało sie gratuluje - error: ${error}`);
-      setSuccessful(false);
-    }
-  }, [user, loading]);
-
   const handleLogin = () => {
     setMessage("");
     setSuccessful(false);
@@ -112,13 +99,12 @@ function Login() {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user.email, user.password);
           setMessage("bla bla bla udało sie gratuluje");
           setSuccessful(true);
           login(user);
         })
         .catch((error) => {
-          switch(error.code) {
+          switch (error.code) {
             case "auth/user-not-found":
               setMessage("User not found");
               setSuccessful(false);
@@ -135,6 +121,83 @@ function Login() {
     } else {
       setMessage("bla bla bla nie udało sie gratuluje");
       setSuccessful(false);
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    const googleProvider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const user = result.user;
+        login(user);
+        setMessage(`Succes`);
+        setSuccessful(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        errorMessage(errorCode);
+      });
+  };
+
+  const handleGithubLogin = () => {
+    const gitHubProvider = new GithubAuthProvider();
+    signInWithPopup(auth, gitHubProvider)
+      .then((result) => {
+        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+        const credential = GithubAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        login(user);
+        setMessage(`Succes`);
+        setSuccessful(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        errorMessage(errorCode);
+      });
+  };
+
+  const errorMessage = (errorCode) => {
+    switch (errorCode) {
+      case "auth/account-exists-with-different-credential":
+        setMessage(
+          `There is an account already associated with this email address. Sign in using that account or delete it, then link it with your current account`
+        );
+        break;
+      case "auth/credential-already-in-use":
+        setMessage(
+          `There is an account already associated with this email address. Sign in using that account or delete it, then link it with your current account`
+        );
+        break;
+      case "auth/email-already-in-use":
+        setMessage(
+          `There is an account already associated with this email address. Sign in using that account or delete it, then link it with your current account`
+        );
+        break;
+      case "auth/operation-not-allowed":
+        setMessage(`You must enable Google authentication on your project`);
+        break;
+      case "auth/requires-recent-login":
+        setMessage(`You must sign in again before reauthenticating.`);
+        break;
+      case "auth/user-disabled":
+        setMessage(`The user account has been disabled.`);
+        break;
+      case "auth/user-not-found":
+        setMessage(
+          `There is no user record corresponding to this identifier. The user may have been deleted.`
+        );
+        break;
+      case "auth/wrong-password":
+        setMessage(
+          `The password is invalid or the user does not have a password.`
+        );
+        break;
+      default:
+        setMessage(`error: ${error.message}`);
+        setSuccessful(false);
     }
   };
 
@@ -202,8 +265,8 @@ function Login() {
                   Submit
                 </Button>
               </div>
-              <Button onClick={logInWithGoogle}>Login with Google</Button>
-              <Button onClick={logInWithGithub}>Login with Github</Button>
+              <Button onClick={handleGoogleLogin}>Login with Google</Button>
+              <Button onClick={handleGithubLogin}>Login with Github</Button>
             </div>
           )}
           {message && (

@@ -77,6 +77,7 @@ export const UsersProvider = (props) => {
 
   const logout = () => {
     setLoggedUser(null);
+    
   };
 
   return (
