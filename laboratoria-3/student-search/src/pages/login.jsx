@@ -199,7 +199,7 @@ function Login() {
         setMessage(`error: ${error.message}`);
         setSuccessful(false);
     }
-  };
+  }
 
   return (
     <>
